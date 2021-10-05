@@ -27,6 +27,7 @@ object Boilerplate {
     GenSemigroupalBuilders,
     GenSemigroupalArityFunctions,
     GenApplyArityFunctions,
+    GenFlatMapArityFunctions,
     GenTupleSemigroupalSyntax,
     GenParallelArityFunctions,
     GenParallelArityFunctions2,
@@ -211,6 +212,37 @@ object Boilerplate {
       """
     }
   }
+
+  object GenFlatMapArityFunctions extends Template {
+    def filename(root: File) = root / "cats" / "FlatMapArityFunctions.scala"
+    override def range = 3 to maxArity
+    def content(tv: TemplateVals) = {
+      import tv._
+
+      val tpes = synTypes.map { tpe =>
+        s"F[$tpe]"
+      }
+      val fargs = (0 until arity).map("f" + _)
+      val fparams = fargs.zip(tpes).map { case (v, t) => s"$v:$t" }.mkString(", ")
+
+      block"""
+      |package cats
+      |
+      |/**
+      | * @groupprio Ungrouped 0
+      | *
+      | * @groupname MapArity flatMap arity
+      | * @groupdesc MapArity Higher-arity flatMap methods
+      | * @groupprio MapArity 999
+      | */
+      |trait FlatMapArityFunctions[F[_]] { self: FlatMap[F] =>
+        -  /** @group MapArity */
+        -  def flatMap$arity[${`A..N`}, Z]($fparams)(f: (${`A..N`}) => F[Z]): F[Z] = self.flatten(Semigroupal.map$arity($fparams)(f)(self, self))
+      |}
+      """
+    }
+  }
+
 
   object GenApplyArityFunctions extends Template {
     def filename(root: File) = root / "cats" / "ApplyArityFunctions.scala"
