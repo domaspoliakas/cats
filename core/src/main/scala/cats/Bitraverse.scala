@@ -128,12 +128,11 @@ object Bitraverse {
   object ops {
     implicit def toAllBitraverseOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bitraverse[F]): AllOps[F, A, B] {
       type TypeClassType = Bitraverse[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Bitraverse[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Bitraverse[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Bitraverse[F]
@@ -150,12 +149,11 @@ object Bitraverse {
   trait ToBitraverseOps extends Serializable {
     implicit def toBitraverseOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bitraverse[F]): Ops[F, A, B] {
       type TypeClassType = Bitraverse[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Bitraverse[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Bitraverse[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToBitraverseOps

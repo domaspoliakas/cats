@@ -38,12 +38,11 @@ object Distributive {
   object ops {
     implicit def toAllDistributiveOps[F[_], A](target: F[A])(implicit tc: Distributive[F]): AllOps[F, A] {
       type TypeClassType = Distributive[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Distributive[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Distributive[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Distributive[F]
@@ -56,12 +55,11 @@ object Distributive {
   trait ToDistributiveOps extends Serializable {
     implicit def toDistributiveOps[F[_], A](target: F[A])(implicit tc: Distributive[F]): Ops[F, A] {
       type TypeClassType = Distributive[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Distributive[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Distributive[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToDistributiveOps

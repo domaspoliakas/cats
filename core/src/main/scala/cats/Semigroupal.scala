@@ -101,12 +101,11 @@ object Semigroupal extends ScalaVersionSpecificSemigroupalInstances with Semigro
   object ops {
     implicit def toAllSemigroupalOps[F[_], A](target: F[A])(implicit tc: Semigroupal[F]): AllOps[F, A] {
       type TypeClassType = Semigroupal[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Semigroupal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Semigroupal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Semigroupal[F]
@@ -118,12 +117,11 @@ object Semigroupal extends ScalaVersionSpecificSemigroupalInstances with Semigro
   trait ToSemigroupalOps extends Serializable {
     implicit def toSemigroupalOps[F[_], A](target: F[A])(implicit tc: Semigroupal[F]): Ops[F, A] {
       type TypeClassType = Semigroupal[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Semigroupal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Semigroupal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToSemigroupalOps

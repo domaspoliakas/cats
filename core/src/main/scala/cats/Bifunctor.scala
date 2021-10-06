@@ -78,12 +78,11 @@ object Bifunctor extends cats.instances.NTupleBifunctorInstances {
   object ops {
     implicit def toAllBifunctorOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bifunctor[F]): AllOps[F, A, B] {
       type TypeClassType = Bifunctor[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Bifunctor[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Bifunctor[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Bifunctor[F]
@@ -97,12 +96,11 @@ object Bifunctor extends cats.instances.NTupleBifunctorInstances {
   trait ToBifunctorOps extends Serializable {
     implicit def toBifunctorOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bifunctor[F]): Ops[F, A, B] {
       type TypeClassType = Bifunctor[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Bifunctor[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Bifunctor[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToBifunctorOps
@@ -110,6 +108,7 @@ object Bifunctor extends cats.instances.NTupleBifunctorInstances {
   /* ======================================================================== */
   /* END OF SIMULACRUM-MANAGED CODE                                           */
   /* ======================================================================== */
+
 }
 
 private[cats] trait ComposedBifunctor[F[_, _], G[_, _]] extends Bifunctor[λ[(A, B) => F[G[A, B], G[A, B]]]] {

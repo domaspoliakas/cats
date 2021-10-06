@@ -49,12 +49,11 @@ object InvariantMonoidal {
   object ops {
     implicit def toAllInvariantMonoidalOps[F[_], A](target: F[A])(implicit tc: InvariantMonoidal[F]): AllOps[F, A] {
       type TypeClassType = InvariantMonoidal[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = InvariantMonoidal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = InvariantMonoidal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: InvariantMonoidal[F]
@@ -67,12 +66,11 @@ object InvariantMonoidal {
   trait ToInvariantMonoidalOps extends Serializable {
     implicit def toInvariantMonoidalOps[F[_], A](target: F[A])(implicit tc: InvariantMonoidal[F]): Ops[F, A] {
       type TypeClassType = InvariantMonoidal[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = InvariantMonoidal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = InvariantMonoidal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToInvariantMonoidalOps

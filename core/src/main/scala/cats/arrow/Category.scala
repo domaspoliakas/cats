@@ -40,12 +40,11 @@ object Category {
   object ops {
     implicit def toAllCategoryOps[F[_, _], A, B](target: F[A, B])(implicit tc: Category[F]): AllOps[F, A, B] {
       type TypeClassType = Category[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Category[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Category[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Category[F]
@@ -58,12 +57,11 @@ object Category {
   trait ToCategoryOps extends Serializable {
     implicit def toCategoryOps[F[_, _], A, B](target: F[A, B])(implicit tc: Category[F]): Ops[F, A, B] {
       type TypeClassType = Category[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Category[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Category[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToCategoryOps

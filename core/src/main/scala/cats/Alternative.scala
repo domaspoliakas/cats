@@ -104,12 +104,11 @@ object Alternative {
   object ops {
     implicit def toAllAlternativeOps[F[_], A](target: F[A])(implicit tc: Alternative[F]): AllOps[F, A] {
       type TypeClassType = Alternative[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Alternative[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Alternative[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Alternative[F]
@@ -128,12 +127,11 @@ object Alternative {
   trait ToAlternativeOps extends Serializable {
     implicit def toAlternativeOps[F[_], A](target: F[A])(implicit tc: Alternative[F]): Ops[F, A] {
       type TypeClassType = Alternative[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Alternative[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Alternative[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToAlternativeOps

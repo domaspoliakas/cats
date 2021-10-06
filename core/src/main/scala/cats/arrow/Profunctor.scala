@@ -93,12 +93,11 @@ object Profunctor {
   object ops {
     implicit def toAllProfunctorOps[F[_, _], A, B](target: F[A, B])(implicit tc: Profunctor[F]): AllOps[F, A, B] {
       type TypeClassType = Profunctor[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Profunctor[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Profunctor[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Profunctor[F]
@@ -114,12 +113,11 @@ object Profunctor {
   trait ToProfunctorOps extends Serializable {
     implicit def toProfunctorOps[F[_, _], A, B](target: F[A, B])(implicit tc: Profunctor[F]): Ops[F, A, B] {
       type TypeClassType = Profunctor[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Profunctor[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Profunctor[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToProfunctorOps

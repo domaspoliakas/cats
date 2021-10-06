@@ -42,12 +42,11 @@ object ContravariantMonoidal extends SemigroupalArityFunctions {
       target: F[A]
     )(implicit tc: ContravariantMonoidal[F]): AllOps[F, A] {
       type TypeClassType = ContravariantMonoidal[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = ContravariantMonoidal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = ContravariantMonoidal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: ContravariantMonoidal[F]
@@ -63,12 +62,11 @@ object ContravariantMonoidal extends SemigroupalArityFunctions {
   trait ToContravariantMonoidalOps extends Serializable {
     implicit def toContravariantMonoidalOps[F[_], A](target: F[A])(implicit tc: ContravariantMonoidal[F]): Ops[F, A] {
       type TypeClassType = ContravariantMonoidal[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = ContravariantMonoidal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = ContravariantMonoidal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToContravariantMonoidalOps

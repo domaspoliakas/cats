@@ -33,12 +33,11 @@ object One {
   object ops {
     implicit def toAllOneOps[A](target: A)(implicit tc: One[A]): AllOps[A] {
       type TypeClassType = One[A]
-    } =
-      new AllOps[A] {
-        type TypeClassType = One[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[A] {
+      type TypeClassType = One[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[A] extends Serializable {
     type TypeClassType <: One[A]
@@ -51,12 +50,11 @@ object One {
   trait ToOneOps extends Serializable {
     implicit def toOneOps[A](target: A)(implicit tc: One[A]): Ops[A] {
       type TypeClassType = One[A]
-    } =
-      new Ops[A] {
-        type TypeClassType = One[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[A] {
+      type TypeClassType = One[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToOneOps

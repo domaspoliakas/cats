@@ -45,12 +45,11 @@ object Comonad {
   object ops {
     implicit def toAllComonadOps[F[_], A](target: F[A])(implicit tc: Comonad[F]): AllOps[F, A] {
       type TypeClassType = Comonad[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Comonad[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Comonad[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Comonad[F]
@@ -64,12 +63,11 @@ object Comonad {
   trait ToComonadOps extends Serializable {
     implicit def toComonadOps[F[_], A](target: F[A])(implicit tc: Comonad[F]): Ops[F, A] {
       type TypeClassType = Comonad[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Comonad[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Comonad[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToComonadOps

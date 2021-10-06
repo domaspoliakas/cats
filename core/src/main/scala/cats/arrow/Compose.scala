@@ -61,12 +61,11 @@ object Compose {
   object ops {
     implicit def toAllComposeOps[F[_, _], A, B](target: F[A, B])(implicit tc: Compose[F]): AllOps[F, A, B] {
       type TypeClassType = Compose[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Compose[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Compose[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Compose[F]
@@ -81,12 +80,11 @@ object Compose {
   trait ToComposeOps extends Serializable {
     implicit def toComposeOps[F[_, _], A, B](target: F[A, B])(implicit tc: Compose[F]): Ops[F, A, B] {
       type TypeClassType = Compose[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Compose[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Compose[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToComposeOps

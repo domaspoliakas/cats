@@ -132,12 +132,11 @@ object UnorderedFoldable
   object ops {
     implicit def toAllUnorderedFoldableOps[F[_], A](target: F[A])(implicit tc: UnorderedFoldable[F]): AllOps[F, A] {
       type TypeClassType = UnorderedFoldable[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = UnorderedFoldable[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = UnorderedFoldable[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: UnorderedFoldable[F]
@@ -156,12 +155,11 @@ object UnorderedFoldable
   trait ToUnorderedFoldableOps extends Serializable {
     implicit def toUnorderedFoldableOps[F[_], A](target: F[A])(implicit tc: UnorderedFoldable[F]): Ops[F, A] {
       type TypeClassType = UnorderedFoldable[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = UnorderedFoldable[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = UnorderedFoldable[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToUnorderedFoldableOps

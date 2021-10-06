@@ -989,12 +989,11 @@ object Foldable {
   object ops {
     implicit def toAllFoldableOps[F[_], A](target: F[A])(implicit tc: Foldable[F]): AllOps[F, A] {
       type TypeClassType = Foldable[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Foldable[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Foldable[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Foldable[F]
@@ -1020,14 +1019,14 @@ object Foldable {
     def maximumList(implicit A: Order[A]): List[A] = typeClassInstance.maximumList[A](self)(A)
     def minimumByList[B](f: A => B)(implicit ev$1: Order[B]): List[A] = typeClassInstance.minimumByList[A, B](self)(f)
     def maximumByList[B](f: A => B)(implicit ev$1: Order[B]): List[A] = typeClassInstance.maximumByList[A, B](self)(f)
+    def sumAll(implicit A: Numeric[A]): A = typeClassInstance.sumAll[A](self)(A)
+    def productAll(implicit A: Numeric[A]): A = typeClassInstance.productAll[A](self)(A)
     def get(idx: Long): Option[A] = typeClassInstance.get[A](self)(idx)
     def collectFirst[B](pf: PartialFunction[A, B]): Option[B] = typeClassInstance.collectFirst[A, B](self)(pf)
     def collectFirstSome[B](f: A => Option[B]): Option[B] = typeClassInstance.collectFirstSome[A, B](self)(f)
     def collectFoldSome[B](f: A => Option[B])(implicit B: Monoid[B]): B =
       typeClassInstance.collectFoldSome[A, B](self)(f)(B)
     def fold(implicit A: Monoid[A]): A = typeClassInstance.fold[A](self)(A)
-    def sumAll(implicit A: Numeric[A]): A = typeClassInstance.sumAll[A](self)
-    def productAll(implicit A: Numeric[A]): A = typeClassInstance.productAll[A](self)
     def combineAll(implicit ev$1: Monoid[A]): A = typeClassInstance.combineAll[A](self)
     def combineAllOption(implicit ev: Semigroup[A]): Option[A] = typeClassInstance.combineAllOption[A](self)(ev)
     def toIterable: Iterable[A] = typeClassInstance.toIterable[A](self)
@@ -1065,12 +1064,11 @@ object Foldable {
   trait ToFoldableOps extends Serializable {
     implicit def toFoldableOps[F[_], A](target: F[A])(implicit tc: Foldable[F]): Ops[F, A] {
       type TypeClassType = Foldable[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Foldable[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Foldable[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToFoldableOps

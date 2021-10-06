@@ -41,12 +41,11 @@ object InvariantSemigroupal extends SemigroupalArityFunctions {
       target: F[A]
     )(implicit tc: InvariantSemigroupal[F]): AllOps[F, A] {
       type TypeClassType = InvariantSemigroupal[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = InvariantSemigroupal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = InvariantSemigroupal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: InvariantSemigroupal[F]
@@ -59,12 +58,11 @@ object InvariantSemigroupal extends SemigroupalArityFunctions {
   trait ToInvariantSemigroupalOps extends Serializable {
     implicit def toInvariantSemigroupalOps[F[_], A](target: F[A])(implicit tc: InvariantSemigroupal[F]): Ops[F, A] {
       type TypeClassType = InvariantSemigroupal[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = InvariantSemigroupal[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = InvariantSemigroupal[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToInvariantSemigroupalOps

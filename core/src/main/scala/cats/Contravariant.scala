@@ -46,12 +46,11 @@ object Contravariant {
   object ops {
     implicit def toAllContravariantOps[F[_], A](target: F[A])(implicit tc: Contravariant[F]): AllOps[F, A] {
       type TypeClassType = Contravariant[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Contravariant[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Contravariant[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Contravariant[F]
@@ -66,12 +65,11 @@ object Contravariant {
   trait ToContravariantOps extends Serializable {
     implicit def toContravariantOps[F[_], A](target: F[A])(implicit tc: Contravariant[F]): Ops[F, A] {
       type TypeClassType = Contravariant[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Contravariant[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Contravariant[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToContravariantOps

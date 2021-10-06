@@ -111,12 +111,11 @@ object NonEmptyTraverse {
   object ops {
     implicit def toAllNonEmptyTraverseOps[F[_], A](target: F[A])(implicit tc: NonEmptyTraverse[F]): AllOps[F, A] {
       type TypeClassType = NonEmptyTraverse[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = NonEmptyTraverse[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = NonEmptyTraverse[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: NonEmptyTraverse[F]
@@ -137,12 +136,11 @@ object NonEmptyTraverse {
   trait ToNonEmptyTraverseOps extends Serializable {
     implicit def toNonEmptyTraverseOps[F[_], A](target: F[A])(implicit tc: NonEmptyTraverse[F]): Ops[F, A] {
       type TypeClassType = NonEmptyTraverse[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = NonEmptyTraverse[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = NonEmptyTraverse[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToNonEmptyTraverseOps

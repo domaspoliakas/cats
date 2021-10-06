@@ -34,12 +34,11 @@ object Zero {
   object ops {
     implicit def toAllZeroOps[A](target: A)(implicit tc: Zero[A]): AllOps[A] {
       type TypeClassType = Zero[A]
-    } =
-      new AllOps[A] {
-        type TypeClassType = Zero[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[A] {
+      type TypeClassType = Zero[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[A] extends Serializable {
     type TypeClassType <: Zero[A]
@@ -52,12 +51,11 @@ object Zero {
   trait ToZeroOps extends Serializable {
     implicit def toZeroOps[A](target: A)(implicit tc: Zero[A]): Ops[A] {
       type TypeClassType = Zero[A]
-    } =
-      new Ops[A] {
-        type TypeClassType = Zero[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[A] {
+      type TypeClassType = Zero[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToZeroOps

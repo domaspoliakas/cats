@@ -20,8 +20,7 @@ import scala.annotation.implicitNotFound
  * Must obey the laws defined in cats.laws.FlatMapLaws.
  */
 @implicitNotFound("Could not find an instance of FlatMap for ${F}")
-@typeclass(excludeParents = List("FlatMapArityFunctions")) 
-trait FlatMap[F[_]] extends Apply[F] with FlatMapArityFunctions[F] {
+@typeclass trait FlatMap[F[_]] extends Apply[F] {
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 
   /**
@@ -219,12 +218,11 @@ object FlatMap {
   object ops {
     implicit def toAllFlatMapOps[F[_], A](target: F[A])(implicit tc: FlatMap[F]): AllOps[F, A] {
       type TypeClassType = FlatMap[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = FlatMap[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = FlatMap[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: FlatMap[F]
@@ -243,12 +241,11 @@ object FlatMap {
   trait ToFlatMapOps extends Serializable {
     implicit def toFlatMapOps[F[_], A](target: F[A])(implicit tc: FlatMap[F]): Ops[F, A] {
       type TypeClassType = FlatMap[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = FlatMap[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = FlatMap[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToFlatMapOps

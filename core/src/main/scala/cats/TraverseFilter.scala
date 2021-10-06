@@ -131,12 +131,11 @@ object TraverseFilter {
   object ops {
     implicit def toAllTraverseFilterOps[F[_], A](target: F[A])(implicit tc: TraverseFilter[F]): AllOps[F, A] {
       type TypeClassType = TraverseFilter[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = TraverseFilter[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = TraverseFilter[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: TraverseFilter[F]
@@ -148,8 +147,8 @@ object TraverseFilter {
       typeClassInstance.filterA[G, A](self)(f)(G)
     def traverseEither[G[_], B, C](f: A => G[Either[C, B]])(g: (A, C) => G[Unit])(implicit G: Monad[G]): G[F[B]] =
       typeClassInstance.traverseEither[G, A, B, C](self)(f)(g)(G)
-    def ordDistinct(implicit O: Order[A]): F[A] = typeClassInstance.ordDistinct(self)
-    def hashDistinct(implicit H: Hash[A]): F[A] = typeClassInstance.hashDistinct(self)
+    def ordDistinct(implicit O: Order[A]): F[A] = typeClassInstance.ordDistinct[A](self)(O)
+    def hashDistinct(implicit H: Hash[A]): F[A] = typeClassInstance.hashDistinct[A](self)(H)
   }
   trait AllOps[F[_], A] extends Ops[F, A] with FunctorFilter.AllOps[F, A] {
     type TypeClassType <: TraverseFilter[F]
@@ -157,12 +156,11 @@ object TraverseFilter {
   trait ToTraverseFilterOps extends Serializable {
     implicit def toTraverseFilterOps[F[_], A](target: F[A])(implicit tc: TraverseFilter[F]): Ops[F, A] {
       type TypeClassType = TraverseFilter[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = TraverseFilter[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = TraverseFilter[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToTraverseFilterOps

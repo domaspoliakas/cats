@@ -346,12 +346,11 @@ object Reducible {
   object ops {
     implicit def toAllReducibleOps[F[_], A](target: F[A])(implicit tc: Reducible[F]): AllOps[F, A] {
       type TypeClassType = Reducible[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Reducible[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Reducible[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Reducible[F]
@@ -397,12 +396,11 @@ object Reducible {
   trait ToReducibleOps extends Serializable {
     implicit def toReducibleOps[F[_], A](target: F[A])(implicit tc: Reducible[F]): Ops[F, A] {
       type TypeClassType = Reducible[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Reducible[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Reducible[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToReducibleOps

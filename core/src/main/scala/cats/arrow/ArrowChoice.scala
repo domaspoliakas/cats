@@ -59,12 +59,11 @@ object ArrowChoice {
   object ops {
     implicit def toAllArrowChoiceOps[F[_, _], A, B](target: F[A, B])(implicit tc: ArrowChoice[F]): AllOps[F, A, B] {
       type TypeClassType = ArrowChoice[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = ArrowChoice[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = ArrowChoice[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: ArrowChoice[F]
@@ -81,12 +80,11 @@ object ArrowChoice {
   trait ToArrowChoiceOps extends Serializable {
     implicit def toArrowChoiceOps[F[_, _], A, B](target: F[A, B])(implicit tc: ArrowChoice[F]): Ops[F, A, B] {
       type TypeClassType = ArrowChoice[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = ArrowChoice[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = ArrowChoice[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToArrowChoiceOps

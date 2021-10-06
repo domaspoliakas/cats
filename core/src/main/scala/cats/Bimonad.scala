@@ -21,12 +21,11 @@ object Bimonad {
   object ops {
     implicit def toAllBimonadOps[F[_], A](target: F[A])(implicit tc: Bimonad[F]): AllOps[F, A] {
       type TypeClassType = Bimonad[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Bimonad[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Bimonad[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Bimonad[F]
@@ -39,12 +38,11 @@ object Bimonad {
   trait ToBimonadOps extends Serializable {
     implicit def toBimonadOps[F[_], A](target: F[A])(implicit tc: Bimonad[F]): Ops[F, A] {
       type TypeClassType = Bimonad[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Bimonad[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Bimonad[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToBimonadOps

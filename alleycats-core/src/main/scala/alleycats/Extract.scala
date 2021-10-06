@@ -38,12 +38,11 @@ object Extract {
   object ops {
     implicit def toAllExtractOps[F[_], A](target: F[A])(implicit tc: Extract[F]): AllOps[F, A] {
       type TypeClassType = Extract[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Extract[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Extract[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Extract[F]
@@ -55,12 +54,11 @@ object Extract {
   trait ToExtractOps extends Serializable {
     implicit def toExtractOps[F[_], A](target: F[A])(implicit tc: Extract[F]): Ops[F, A] {
       type TypeClassType = Extract[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Extract[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Extract[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToExtractOps

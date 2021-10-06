@@ -104,12 +104,11 @@ object Bifoldable extends cats.instances.NTupleBitraverseInstances {
   object ops {
     implicit def toAllBifoldableOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bifoldable[F]): AllOps[F, A, B] {
       type TypeClassType = Bifoldable[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Bifoldable[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Bifoldable[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Bifoldable[F]
@@ -126,12 +125,11 @@ object Bifoldable extends cats.instances.NTupleBitraverseInstances {
   trait ToBifoldableOps extends Serializable {
     implicit def toBifoldableOps[F[_, _], A, B](target: F[A, B])(implicit tc: Bifoldable[F]): Ops[F, A, B] {
       type TypeClassType = Bifoldable[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Bifoldable[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Bifoldable[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToBifoldableOps

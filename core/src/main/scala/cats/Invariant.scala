@@ -259,12 +259,11 @@ object Invariant extends ScalaVersionSpecificInvariantInstances with InvariantIn
   object ops {
     implicit def toAllInvariantOps[F[_], A](target: F[A])(implicit tc: Invariant[F]): AllOps[F, A] {
       type TypeClassType = Invariant[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = Invariant[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = Invariant[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: Invariant[F]
@@ -276,12 +275,11 @@ object Invariant extends ScalaVersionSpecificInvariantInstances with InvariantIn
   trait ToInvariantOps extends Serializable {
     implicit def toInvariantOps[F[_], A](target: F[A])(implicit tc: Invariant[F]): Ops[F, A] {
       type TypeClassType = Invariant[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = Invariant[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = Invariant[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToInvariantOps

@@ -56,12 +56,11 @@ object Strong {
   object ops {
     implicit def toAllStrongOps[F[_, _], A, B](target: F[A, B])(implicit tc: Strong[F]): AllOps[F, A, B] {
       type TypeClassType = Strong[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = Strong[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = Strong[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: Strong[F]
@@ -76,12 +75,11 @@ object Strong {
   trait ToStrongOps extends Serializable {
     implicit def toStrongOps[F[_, _], A, B](target: F[A, B])(implicit tc: Strong[F]): Ops[F, A, B] {
       type TypeClassType = Strong[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = Strong[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = Strong[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToStrongOps

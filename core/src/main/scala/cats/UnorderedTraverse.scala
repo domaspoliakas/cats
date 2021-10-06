@@ -29,12 +29,11 @@ object UnorderedTraverse {
   object ops {
     implicit def toAllUnorderedTraverseOps[F[_], A](target: F[A])(implicit tc: UnorderedTraverse[F]): AllOps[F, A] {
       type TypeClassType = UnorderedTraverse[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = UnorderedTraverse[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = UnorderedTraverse[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: UnorderedTraverse[F]
@@ -51,12 +50,11 @@ object UnorderedTraverse {
   trait ToUnorderedTraverseOps extends Serializable {
     implicit def toUnorderedTraverseOps[F[_], A](target: F[A])(implicit tc: UnorderedTraverse[F]): Ops[F, A] {
       type TypeClassType = UnorderedTraverse[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = UnorderedTraverse[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = UnorderedTraverse[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToUnorderedTraverseOps

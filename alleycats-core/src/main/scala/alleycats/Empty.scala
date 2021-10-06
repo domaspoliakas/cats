@@ -36,12 +36,11 @@ object Empty extends EmptyInstances0 {
   object ops {
     implicit def toAllEmptyOps[A](target: A)(implicit tc: Empty[A]): AllOps[A] {
       type TypeClassType = Empty[A]
-    } =
-      new AllOps[A] {
-        type TypeClassType = Empty[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[A] {
+      type TypeClassType = Empty[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[A] extends Serializable {
     type TypeClassType <: Empty[A]
@@ -54,12 +53,11 @@ object Empty extends EmptyInstances0 {
   trait ToEmptyOps extends Serializable {
     implicit def toEmptyOps[A](target: A)(implicit tc: Empty[A]): Ops[A] {
       type TypeClassType = Empty[A]
-    } =
-      new Ops[A] {
-        type TypeClassType = Empty[A]
-        val self: A = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[A] {
+      type TypeClassType = Empty[A]
+      val self: A = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToEmptyOps

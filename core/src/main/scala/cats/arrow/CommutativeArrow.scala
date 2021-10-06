@@ -30,12 +30,11 @@ object CommutativeArrow {
       target: F[A, B]
     )(implicit tc: CommutativeArrow[F]): AllOps[F, A, B] {
       type TypeClassType = CommutativeArrow[F]
-    } =
-      new AllOps[F, A, B] {
-        type TypeClassType = CommutativeArrow[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A, B] {
+      type TypeClassType = CommutativeArrow[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_, _], A, B] extends Serializable {
     type TypeClassType <: CommutativeArrow[F]
@@ -48,12 +47,11 @@ object CommutativeArrow {
   trait ToCommutativeArrowOps extends Serializable {
     implicit def toCommutativeArrowOps[F[_, _], A, B](target: F[A, B])(implicit tc: CommutativeArrow[F]): Ops[F, A, B] {
       type TypeClassType = CommutativeArrow[F]
-    } =
-      new Ops[F, A, B] {
-        type TypeClassType = CommutativeArrow[F]
-        val self: F[A, B] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A, B] {
+      type TypeClassType = CommutativeArrow[F]
+      val self: F[A, B] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToCommutativeArrowOps

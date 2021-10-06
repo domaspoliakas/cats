@@ -30,12 +30,11 @@ object CommutativeFlatMap {
   object ops {
     implicit def toAllCommutativeFlatMapOps[F[_], A](target: F[A])(implicit tc: CommutativeFlatMap[F]): AllOps[F, A] {
       type TypeClassType = CommutativeFlatMap[F]
-    } =
-      new AllOps[F, A] {
-        type TypeClassType = CommutativeFlatMap[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new AllOps[F, A] {
+      type TypeClassType = CommutativeFlatMap[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   trait Ops[F[_], A] extends Serializable {
     type TypeClassType <: CommutativeFlatMap[F]
@@ -48,12 +47,11 @@ object CommutativeFlatMap {
   trait ToCommutativeFlatMapOps extends Serializable {
     implicit def toCommutativeFlatMapOps[F[_], A](target: F[A])(implicit tc: CommutativeFlatMap[F]): Ops[F, A] {
       type TypeClassType = CommutativeFlatMap[F]
-    } =
-      new Ops[F, A] {
-        type TypeClassType = CommutativeFlatMap[F]
-        val self: F[A] = target
-        val typeClassInstance: TypeClassType = tc
-      }
+    } = new Ops[F, A] {
+      type TypeClassType = CommutativeFlatMap[F]
+      val self: F[A] = target
+      val typeClassInstance: TypeClassType = tc
+    }
   }
   @deprecated("Use cats.syntax object imports", "2.2.0")
   object nonInheritedOps extends ToCommutativeFlatMapOps
